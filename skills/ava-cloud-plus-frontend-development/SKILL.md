@@ -19,6 +19,20 @@ bsui/c PC 端界面实现
 
 目标不是机械地让四个目录都有改动，而是保证本次需求涉及的契约、运行时、Application 和 PC View 相互一致，没有把职责放错层，也没有遗漏引用、工厂、服务或导航注册。
 
+## 开发流程位置
+
+本 Skill 在完整功能交付中消费已经确认的业务模型和服务端契约：
+
+```text
+业务对象建模 → 代码框架生成 → Java 后端契约
+    ↓
+ava-cloud-plus-frontend-development（当前）
+    ↓
+构建门禁 → 数据库落地 → verifying-ava-cloud-plus-feature
+```
+
+纯前端功能可以直接进入本阶段；跨前后端功能默认先稳定后端 App/Svc 与 REST 契约。完成后交付四层契约、注册入口、语言资源和 TypeScript 构建结果，由跨层验收继续核对数据库与实际业务行为。
+
 ## 范围与红线
 
 - 处理业务模块中的 `api`、`borep`、`bsapp`、`bsui/c` 及其必要的模块入口、语言资源和 TypeScript 引用。

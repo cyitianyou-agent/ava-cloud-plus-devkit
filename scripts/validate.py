@@ -18,6 +18,16 @@ namePattern = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 versionPattern = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
 linkPattern = re.compile(r"\[[^\]]+\]\((?!https?://|#)([^)]+)\)")
 sourcePattern = re.compile(r"(?:[A-Za-z]:\\|/Users/|/home/|customeSkills|\.codex[/\\]skills)", re.IGNORECASE)
+expectedSkills = [
+    "delivering-ava-cloud-plus-feature",
+    "generating-ava-cloud-business-objects",
+    "generating-ava-cloud-code",
+    "ava-cloud-plus-backend-development",
+    "ava-cloud-plus-frontend-development",
+    "evolving-ava-cloud-plus-database",
+    "verifying-ava-cloud-plus-feature",
+    "converting-crystal-reports-to-jasper",
+]
 
 
 def loadJson(path: Path) -> dict:
@@ -104,8 +114,13 @@ def validateSkills(errors: list[str]) -> None:
         errors.append("缺少 skills 目录")
         return
     skillDirs = sorted(path for path in skillsDir.iterdir() if path.is_dir())
-    if len(skillDirs) != 5:
-        errors.append(f"应包含 5 个 Skill，实际为 {len(skillDirs)} 个")
+    actualSkills = {path.name for path in skillDirs}
+    missingSkills = [name for name in expectedSkills if name not in actualSkills]
+    unexpectedSkills = sorted(actualSkills.difference(expectedSkills))
+    if missingSkills:
+        errors.append(f"缺少 Skill: {', '.join(missingSkills)}")
+    if unexpectedSkills:
+        errors.append(f"存在未登记 Skill: {', '.join(unexpectedSkills)}")
     for skillDir in skillDirs:
         skillFile = skillDir / "SKILL.md"
         if not skillFile.is_file():
@@ -146,7 +161,7 @@ def main() -> int:
         for error in errors:
             print(f"- {error}")
         return 1
-    print("Validation passed: plugin, marketplace, version, and 5 Skills are consistent.")
+    print(f"Validation passed: plugin, marketplace, version, and {len(expectedSkills)} Skills are consistent.")
     return 0
 
 

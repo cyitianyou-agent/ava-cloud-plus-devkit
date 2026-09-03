@@ -7,6 +7,10 @@ description: Use when converting Crystal Reports RPT or RptToXml metadata into p
 
 将 Crystal 报表语义迁移为 JasperReports Library 7.x 的 Jackson XML 格式。Skill 自带规范与模板，不依赖创建它的电脑、源码目录、Python、PowerShell、数据库连接或 Jasper 编译环境。
 
+## 开发流程位置
+
+本 Skill 是报表迁移的独立分支，不属于“业务对象建模 → 代码生成 → 前后端开发 → 数据库 → 验收”的标准功能链。只有完整功能明确包含 Crystal 报表迁移时，才由 `delivering-ava-cloud-plus-feature` 把它作为并行交付项纳入最终验收。
+
 ## 选择输入
 
 - 优先使用已经提取的 RptToXml XML；读取前先按 [`references/crystal-xml-map.md`](references/crystal-xml-map.md) 清除凭据、服务器、连接串、保存数据和当前参数值。

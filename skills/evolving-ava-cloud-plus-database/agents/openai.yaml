@@ -1,0 +1,5 @@
+interface:
+  display_name: "演进 AVA Cloud+ 数据库"
+  short_description: "用 btulz.transforms 落地数据结构、SQL 与初始化数据"
+  default_prompt: "使用 $evolving-ava-cloud-plus-database 根据 AVA Cloud+ 数据结构或模块 JAR 安全更新目标数据库。"
+

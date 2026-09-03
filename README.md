@@ -2,17 +2,32 @@
 
 `ava-cloud-plus-devkit` 是一个面向 Codex 的 Git marketplace 插件，把多项 AVA Cloud+ 开发技能打包为一次安装、统一更新的工具集。
 
-## 包含的技能
+## 按开发流程使用 Skill
 
-| Skill | 用途 |
-| --- | --- |
-| `ava-cloud-plus-frontend-development` | 创建、修改或评审 AVA Cloud+ TypeScript 前端业务模块，联动 `api`、`borep`、`bsapp` 与 `bsui/c` |
-| `ava-cloud-plus-backend-development` | 创建、修改或评审 AVA Cloud+ Java 后端业务模块，联动 BO、规则、逻辑、仓储、REST 与初始化资源 |
-| `generating-ava-cloud-business-objects` | 根据自然语言创建或局部更新 AVA Cloud+ `datastructures` XML |
-| `generating-ava-cloud-code` | 使用 `btulz.transforms` 从业务对象 Excel 或 XML 生成前后端代码，并安全全量复制或增量合并 |
-| `converting-crystal-reports-to-jasper` | 将 Crystal Reports RPT/RptToXml 元数据迁移为 JasperReports Library 7.x JRXML |
+| 阶段 | Skill | 用途 |
+| --- | --- | --- |
+| 0. 完整交付编排 | `delivering-ava-cloud-plus-feature` | 从业务需求建立交付契约，路由后续阶段并追踪整体完成度 |
+| 1. 业务对象建模 | `generating-ava-cloud-business-objects` | 根据自然语言创建或局部更新 AVA Cloud+ `datastructures` XML |
+| 2. 代码框架生成 | `generating-ava-cloud-code` | 使用 `btulz.transforms` 从 Excel 或 XML 生成前后端骨架并安全合并 |
+| 3. Java 后端开发 | `ava-cloud-plus-backend-development` | 联动 BO、规则、逻辑、仓储、REST、初始化资源和测试 |
+| 4. TypeScript 前端开发 | `ava-cloud-plus-frontend-development` | 联动 `api`、`borep`、`bsapp` 与 `bsui/c` |
+| 5. 数据库落地 | `evolving-ava-cloud-plus-database` | 使用 `ds`、`dsJar`、`sql` 和 bobas `ds/init` 落地结构与初始化数据 |
+| 6. 跨层验收 | `verifying-ava-cloud-plus-feature` | 验证模型、Java、REST、TypeScript、数据库和业务行为 |
+| 独立报表分支 | `converting-crystal-reports-to-jasper` | 将 Crystal Reports RPT/RptToXml 元数据迁移为 JasperReports Library 7.x JRXML |
 
-五个 Skill 的引用文档、模板、辅助脚本和代理界面配置均随插件发布，不依赖作者电脑上的原始目录。
+标准链路如下；局部需求只使用真正受影响的阶段：
+
+```text
+需求与验收条件
+    ↓
+业务对象 XML → 代码骨架 → Java 后端 → TypeScript 前端
+                                      ↓
+                            构建门禁 → 数据库落地 → 跨层验收
+```
+
+数据库操作会改变外部状态。插件可以在未连接数据库时完成规划、输入检查和构建门禁，但只有用户明确授权目标环境后才执行数据库命令。完整的阶段输入、输出和返回规则见 [AVA Cloud+ 完整功能开发流程](docs/DEVELOPMENT_WORKFLOW.md)。
+
+八个 Skill 的引用文档、模板、辅助脚本和代理界面配置均随插件发布，不依赖作者电脑上的原始目录。
 
 ## 安装
 
@@ -47,10 +62,13 @@ codex plugin add ava-cloud-plus-devkit@ava-cloud-plus-devkit
 
 ## 使用示例
 
+- “从这项业务需求开始，帮我完成 AVA Cloud+ 的建模、前后端开发、数据库落地和验收。”
 - “帮我在 AVA Cloud+ 的库存模块里新增一个 PC 端编辑功能。”
 - “帮我在 AVA Cloud+ 的销售模块新增一个 Java 后端业务逻辑，并补齐仓储、REST 和测试。”
 - “模块简称是 `MM`，请根据描述生成一个主数据业务对象 XML，输出到指定目录。”
 - “使用这份业务对象 Excel 或 XML 调用 btulz.transforms 生成代码，并把新增对象安全合并到现有模块。”
+- “使用模块 JAR 中的数据结构和初始化 SQL 更新已授权的测试数据库，并核验结果。”
+- “按需求验收这个功能的 XML、Java、REST、TypeScript、数据库和保存重载行为。”
 - “把这份 RptToXml XML 转为 JasperReports 7.x JRXML。”
 
 也可以显式指定 Skill，例如：
@@ -65,7 +83,7 @@ codex plugin add ava-cloud-plus-devkit@ava-cloud-plus-devkit
 ava-cloud-plus-devkit/
 ├── .agents/plugins/marketplace.json  # Git marketplace 清单
 ├── .codex-plugin/plugin.json         # Codex 插件 manifest
-├── skills/                           # 五个可独立触发的 Skill
+├── skills/                           # 八个可独立触发、可按流程协作的 Skill
 ├── scripts/                          # 本地校验与版本更新脚本
 ├── docs/                             # 安装、发布与维护文档
 ├── VERSION                           # 唯一发布版本号

@@ -1,7 +1,7 @@
 {
   "name": "ava-cloud-plus-devkit",
   "version": "0.1.0",
-  "description": "Codex skills for AVA Cloud+ frontend and Java backend development, business-object Excel/XML and code generation, and Crystal Reports to JasperReports conversion.",
+  "description": "Codex skills for end-to-end AVA Cloud+ feature delivery, business-object modeling, code generation, frontend and Java backend development, database evolution, verification, and report conversion.",
   "author": {
     "name": "cyitianyou-agent",
     "email": "cyitianyou@gmail.com",
@@ -17,13 +17,16 @@
     "business-object",
     "code-generation",
     "java-backend",
+    "database",
+    "verification",
+    "feature-delivery",
     "jasperreports"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "AVA Cloud+ Devkit",
-    "shortDescription": "AVA Cloud+ 前后端开发、业务对象建模、代码生成与报表迁移技能集",
-    "longDescription": "为 Codex 提供 AVA Cloud+ TypeScript 前端和 Java 后端业务模块开发、业务对象数据结构 XML 与代码框架生成，以及 Crystal Reports 到 JasperReports 7.x 的迁移能力。",
+    "shortDescription": "AVA Cloud+ 建模、前后端开发、数据库落地与验收技能集",
+    "longDescription": "为 Codex 提供从业务需求、业务对象 XML、代码生成、TypeScript 前端和 Java 后端开发，到数据库落地与跨层验收的完整 AVA Cloud+ 功能交付流程，并支持 Crystal Reports 到 JasperReports 7.x 的独立迁移能力。",
     "developerName": "cyitianyou-agent",
     "category": "Developer Tools",
     "capabilities": [
@@ -32,9 +35,9 @@
       "Write"
     ],
     "defaultPrompt": [
-      "帮我开发或评审一个 AVA Cloud+ 前端或 Java 后端业务模块。",
-      "根据业务描述、Excel 或 XML 生成 AVA Cloud+ 业务对象模型和前后端代码框架。",
-      "把 Crystal Reports 元数据转换为 JasperReports 7.x JRXML。"
+      "从业务需求开始，帮我完成 AVA Cloud+ 功能的建模、前后端开发、数据库落地与验收。",
+      "根据业务描述、Excel 或 XML 生成 AVA Cloud+ 业务对象模型和代码框架，并继续完成受影响层。",
+      "验证一个 AVA Cloud+ 功能的模型、后端、REST、前端、数据库和业务行为。"
     ],
     "websiteURL": "https://github.com/cyitianyou-agent/ava-cloud-plus-devkit"
   }

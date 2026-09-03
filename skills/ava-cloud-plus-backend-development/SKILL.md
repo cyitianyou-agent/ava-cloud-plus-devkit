@@ -21,6 +21,22 @@ REST DataService 与 JAXB Resolver
 
 业务规则在 BO 属性变化时执行；需要随保存事务正向影响、反向撤销其他对象的逻辑，通过业务逻辑契约与 `BusinessLogic` 实现。目标是让数据模型、运行时对象、持久化、服务契约和资源注册保持一致，而不是机械修改每一层。
 
+## 开发流程位置
+
+本 Skill 位于模型与代码骨架确认之后，默认先于前端业务实现：
+
+```text
+业务对象建模 → 代码框架生成
+    ↓
+ava-cloud-plus-backend-development（当前）
+    ↓
+ava-cloud-plus-frontend-development
+    ↓
+构建门禁 → evolving-ava-cloud-plus-database → verifying-ava-cloud-plus-feature
+```
+
+完成后向下游交付稳定的 BO、App/Svc Repository、REST、序列化和业务行为契约，以及后端构建结果。数据结构发生变化时只修改并核对 XML 与后端代码；数据库实际执行由 `evolving-ava-cloud-plus-database` 负责。
+
 ## 范围与红线
 
 - 处理现有 `ibas.*` 业务模块的 Java 后端及其必要的 Maven、资源、REST 和测试代码。

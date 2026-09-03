@@ -11,6 +11,24 @@ description: Use when 需要从 AVA Cloud+ 业务对象 Excel 或 datastructures
 
 如果用户既没有 Excel 也没有可用的 `Domain` XML，或要求根据自然语言修改模型，先使用 `generating-ava-cloud-business-objects` 完成 XML，再返回本流程。不要为了让代码生成通过而擅自改变业务模型。
 
+## 开发流程位置
+
+本 Skill 位于业务对象建模之后、手工业务开发之前：
+
+```text
+业务对象 XML
+    ↓
+generating-ava-cloud-code（当前）
+    ↓
+ava-cloud-plus-backend-development
+    ↓
+ava-cloud-plus-frontend-development
+    ↓
+构建门禁 → 数据库落地 → 跨层验收
+```
+
+它负责把已确认模型机械投影为候选骨架并安全合并，不负责把模板占位、业务规则、专用仓储方法或页面交互判定为已经实现。完整功能任务中，将新增与合并文件、跳过项和模板遗留项交给后端、前端及验证阶段。
+
 ## 执行门禁
 
 开始前确认输入 Excel/XML、正式模块根目录、`btulz.transforms.core-*.jar` 或模板目录，以及用户需要的后端、前端、`bsui/c`、`bsui/m` 范围。能从会话或目标项目可靠取得时直接使用；不能可靠判断且会改变结果时再询问用户。
