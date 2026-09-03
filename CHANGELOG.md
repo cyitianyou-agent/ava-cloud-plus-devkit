@@ -7,6 +7,7 @@
 ### Added
 
 - `ava-cloud-plus-backend-development` Skill，覆盖 AVA Cloud+ Java 后端业务对象、规则、跨对象逻辑、仓储、REST、初始化资源和测试。
+- `generating-ava-cloud-code` Skill，使用 `btulz.transforms` 从业务对象 Excel 或 XML 隔离生成前后端代码；Excel 会先转换、校验并去重汇总为 XML，再按空模块、新增对象、新增模型或新增字段执行安全复制与增量合并。
 
 ## [0.1.0] - 2026-09-02
 

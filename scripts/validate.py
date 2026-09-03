@@ -104,8 +104,8 @@ def validateSkills(errors: list[str]) -> None:
         errors.append("缺少 skills 目录")
         return
     skillDirs = sorted(path for path in skillsDir.iterdir() if path.is_dir())
-    if len(skillDirs) != 4:
-        errors.append(f"应包含 4 个 Skill，实际为 {len(skillDirs)} 个")
+    if len(skillDirs) != 5:
+        errors.append(f"应包含 5 个 Skill，实际为 {len(skillDirs)} 个")
     for skillDir in skillDirs:
         skillFile = skillDir / "SKILL.md"
         if not skillFile.is_file():
@@ -146,7 +146,7 @@ def main() -> int:
         for error in errors:
             print(f"- {error}")
         return 1
-    print("Validation passed: plugin, marketplace, version, and 4 Skills are consistent.")
+    print("Validation passed: plugin, marketplace, version, and 5 Skills are consistent.")
     return 0
 
 
