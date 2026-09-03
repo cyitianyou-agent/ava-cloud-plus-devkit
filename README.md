@@ -7,25 +7,27 @@
 | 阶段 | Skill | 用途 |
 | --- | --- | --- |
 | 0. 完整交付编排 | `delivering-ava-cloud-plus-feature` | 从业务需求建立交付契约，路由后续阶段并追踪整体完成度 |
-| 1. 业务对象建模 | `generating-ava-cloud-business-objects` | 根据自然语言创建或局部更新 AVA Cloud+ `datastructures` XML |
-| 2. 代码框架生成 | `generating-ava-cloud-code` | 使用 `btulz.transforms` 从 Excel 或 XML 生成前后端骨架并安全合并 |
-| 3. Java 后端开发 | `ava-cloud-plus-backend-development` | 联动 BO、规则、逻辑、仓储、REST、初始化资源和测试 |
-| 4. TypeScript 前端开发 | `ava-cloud-plus-frontend-development` | 联动 `api`、`borep`、`bsapp` 与 `bsui/c` |
-| 5. 数据库落地 | `evolving-ava-cloud-plus-database` | 使用 `ds`、`dsJar`、`sql` 和 bobas `ds/init` 落地结构与初始化数据 |
-| 6. 跨层验收 | `verifying-ava-cloud-plus-feature` | 验证模型、Java、REST、TypeScript、数据库和业务行为 |
-| 独立报表分支 | `converting-crystal-reports-to-jasper` | 将 Crystal Reports RPT/RptToXml 元数据迁移为 JasperReports Library 7.x JRXML |
+| 1. 业务模型确认 | `generating-ava-cloud-business-objects` | 创建、局部更新，或校验修正 Excel 转换得到的 `datastructures` XML |
+| 2. 代码框架生成 | `generating-ava-cloud-code` | 使用 `btulz.transforms` 从已确认模型生成 Java 与 TypeScript PC 骨架并安全合并 |
+| 3a. Java 后端开发 | `ava-cloud-plus-backend-development` | 联动 BO、规则、逻辑、仓储、REST、初始化资源和测试 |
+| 3b. TypeScript PC 前端开发 | `ava-cloud-plus-frontend-development` | 联动 `api`、`borep`、`bsapp` 与 `bsui/c` |
+| 3c. 可选报表旁路 | `converting-crystal-reports-to-jasper` | 将 Crystal Reports RPT/RptToXml 元数据迁移为 JasperReports Library 7.x JRXML |
+| 4. 数据库落地 | `evolving-ava-cloud-plus-database` | 使用 `ds`、`dsJar`、`sql` 和 bobas `ds/init` 落地结构与初始化数据 |
+| 5. 最终跨层验收 | `verifying-ava-cloud-plus-feature` | 汇总模型、Java、REST、TypeScript PC、数据库、业务行为和可选报表证据 |
 
-标准链路如下；局部需求只使用真正受影响的阶段：
+标准链路是按需求裁剪的分支图；局部需求只使用真正受影响的阶段：
 
 ```text
-需求与验收条件
-    ↓
-业务对象 XML → 代码骨架 → Java 后端 → TypeScript 前端
-                                      ↓
-                            构建门禁 → 数据库落地 → 跨层验收
+交付契约
+    ├── 业务模型确认 → 代码候选 → Java / TypeScript PC
+    │                                  ↓
+    │                            构建门禁 → 数据库落地或跳过 ──┐
+    └── Crystal/RptToXml → JRXML → 报表静态检查（可选）───────┤
+                                                               ↓
+                                                          最终跨层验收
 ```
 
-数据库操作会改变外部状态。插件可以在未连接数据库时完成规划、输入检查和构建门禁，但只有用户明确授权目标环境后才执行数据库命令。完整的阶段输入、输出和返回规则见 [AVA Cloud+ 完整功能开发流程](docs/DEVELOPMENT_WORKFLOW.md)。
+数据库操作会改变外部状态。插件可以在未连接数据库时完成规划、输入检查和构建门禁，但只有用户明确授权目标环境后才执行数据库命令。报表迁移默认只提供静态转换证据，编译、数据和版式需要相应运行环境。完整的阶段输入、输出和返回规则见 [AVA Cloud+ 完整功能开发流程](docs/DEVELOPMENT_WORKFLOW.md)。
 
 八个 Skill 的引用文档、模板、辅助脚本和代理界面配置均随插件发布，不依赖作者电脑上的原始目录。
 

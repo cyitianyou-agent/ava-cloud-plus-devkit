@@ -1,5 +1,4 @@
 interface:
   display_name: "验证 AVA Cloud+ 完整功能"
-  short_description: "跨模型、后端、REST、前端和数据库执行交付验收"
-  default_prompt: "使用 $verifying-ava-cloud-plus-feature 验证 AVA Cloud+ 功能的跨层契约、构建结果与业务行为。"
-
+  short_description: "最终验收模型、Java、TypeScript PC、数据库和可选报表"
+  default_prompt: "使用 $verifying-ava-cloud-plus-feature 对已完成实现阶段的 AVA Cloud+ 功能执行最终跨层验收。"

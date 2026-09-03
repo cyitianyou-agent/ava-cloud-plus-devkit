@@ -13,9 +13,9 @@
 | 后端共享 | `<core>/src/main/java/**/repository/{IBORepository*App,IBORepository*Svc,BORepository*}.java` | 新对象时合并 import、fetch、save 契约与实现 |
 | REST 共享 | `<service>/src/main/java/**/service/rest/DataService.java` | 新对象时合并 import 与 fetch/save 端点 |
 | 前端对象契约/实现 | `api/bo/<BO>.ts`、`borep/bo/<BO>.ts` | 新对象可复制；新增字段只合并接口属性和实现属性块 |
-| 前端应用/视图 | `bsapp/<bo>/**`、`bsui/{c,m}/<bo>/**` | 仅处理用户要求或目标已采用的端；同名保留布局和定制逻辑 |
+| 前端应用/视图 | `bsapp/<bo>/**`、`bsui/c/<bo>/**` | 仅处理 PC 端；同名保留布局和定制逻辑，移动端候选列为跳过 |
 | 前端共享注册 | `api/{Data,BORepository,index}.ts`、`borep/{BORepository,index}.ts`、`bsapp/Console.ts` | 新对象时合并对象代码、仓储、引用、工厂、功能和服务注册 |
-| 前端导航 | `bsui/{c,m}/Navigation.ts` | 新对象时合并引用与 `switch` 分支，仅限所需端 |
+| 前端导航 | `bsui/c/Navigation.ts` | 新对象时合并 PC 引用与 `switch` 分支；不合并移动端导航 |
 | 语言资源 | `resources/languages/{bos,<domain>}*.json` | 合并对象、应用、关系和实际展示字段文案，保持 JSON 有效 |
 | 模块脚手架 | 根/项目 `pom.xml`、`.settings`、构建脚本、Web 配置、`MyConfiguration` | 已有模块通常跳过，不因缺失就认定属于对象增量 |
 | 生成的 XML | `<core>/src/main/resources/datastructures/*.xml` | 不覆盖源 XML，仅用于核对 |

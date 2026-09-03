@@ -1,5 +1,4 @@
 interface:
   display_name: "交付 AVA Cloud+ 完整功能"
-  short_description: "编排业务建模、代码生成、前后端开发、数据库与验收"
+  short_description: "编排模型确认、前后端、数据库、可选报表与验收"
   default_prompt: "使用 $delivering-ava-cloud-plus-feature 从业务需求开始，完成 AVA Cloud+ 功能的建模、开发、数据库落地与验收。"
-

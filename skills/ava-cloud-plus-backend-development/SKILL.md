@@ -1,6 +1,6 @@
 ---
 name: ava-cloud-plus-backend-development
-description: 创建、修改或评审 AVA Cloud+ Java 后端业务模块，覆盖业务对象、集合关系、规则、跨对象逻辑、仓储、REST、初始化资源和测试；不适用于 TypeScript 前端、移动端或 ibas-framework 底层架构修改。
+description: Use when 需要创建、修改或评审 AVA Cloud+ Java 后端业务模块，涉及业务对象、集合、规则、跨对象逻辑、仓储、REST、初始化资源或测试；不适用于 TypeScript 前端、移动端或 ibas-framework 底层修改。
 ---
 
 # AVA Cloud+ Java 后端开发
@@ -23,19 +23,19 @@ REST DataService 与 JAXB Resolver
 
 ## 开发流程位置
 
-本 Skill 位于模型与代码骨架确认之后，默认先于前端业务实现：
+本 Skill 消费已经确认的模型和代码候选，并与 TypeScript 前端形成两条按契约依赖协作的实现分支：
 
 ```text
-业务对象建模 → 代码框架生成
-    ↓
-ava-cloud-plus-backend-development（当前）
-    ↓
-ava-cloud-plus-frontend-development
-    ↓
-构建门禁 → evolving-ava-cloud-plus-database → verifying-ava-cloud-plus-feature
+已确认模型与代码候选
+    ├── ava-cloud-plus-backend-development（当前）
+    └── ava-cloud-plus-frontend-development
+                    ↓
+              静态与构建门禁
+                    ↓
+     数据库落地（按需）→ 最终跨层验收
 ```
 
-完成后向下游交付稳定的 BO、App/Svc Repository、REST、序列化和业务行为契约，以及后端构建结果。数据结构发生变化时只修改并核对 XML 与后端代码；数据库实际执行由 `evolving-ava-cloud-plus-database` 负责。
+完成后交付稳定的 BO、App/Svc Repository、REST、序列化和业务行为契约，以及后端构建结果。实现中发现 XML 需要变化时，返回 `generating-ava-cloud-business-objects` 更新并重新确认模型，再同步 Java；本 Skill 不单独定义模型语义。数据库实际执行由 `evolving-ava-cloud-plus-database` 负责。
 
 ## 范围与红线
 
@@ -74,7 +74,7 @@ ava-cloud-plus-frontend-development
 
 | 需求 | 通常涉及 |
 | --- | --- |
-| 新增或改变持久化字段、对象层级 | `datastructures` + BO 接口/实现/集合，并检查仓储、REST、初始化与客户端契约 |
+| 新增或改变持久化字段、对象层级 | 先由模型阶段确认 `datastructures`，本阶段同步 BO 接口/实现/集合，并检查仓储、REST、初始化与客户端契约 |
 | 只改默认值、属性校验或派生计算 | BO `initialize()` / `registerRules()` 或专用 `rules` 类，并补行为测试 |
 | 新增标准查询与保存 | App/Svc 接口 + Repository + DataService + Resolver |
 | 新增非 BO 返回值或专用查询 | `data` DTO/枚举 + App/Svc 接口 + Repository + DataService，按序列化需求更新 Resolver |
@@ -92,7 +92,7 @@ ava-cloud-plus-frontend-development
 - 若目标工程已有明确的生成命令且用户允许生成，先保留工作树差异，生成后逐文件审查；不得接受对无关对象、业务规则、集合关联或自定义仓储方法的覆盖。
 - 若没有可验证的生成入口，不臆造命令。按同模块、同对象类型的现有文件做最小修改。
 - 生成模板中的集合关联占位逻辑不是完成品；父子键、孙表 `ItemId`、查询条件和父属性传播必须结合真实层级实现。
-- 不仅修改生成后的 Java 而遗漏数据结构 XML；也不只修改 XML 而假设运行时代码已经自动同步。
+- 不仅修改生成后的 Java 而忽略模型基线；模型与 Java 不一致时返回模型阶段确认，不能在后端阶段自行选择哪一方正确。
 - 历史代码与当前模板不一致时，以目标模块当前可运行的约定为准，并保持改动最小。
 
 ## 默认实施顺序
@@ -118,3 +118,7 @@ ava-cloud-plus-frontend-development
 - DataService、Resolver、i18n、initialization 和 Maven 依赖没有遗漏或无关扩张。
 - 测试验证业务结果和回滚语义，而非只验证方法可以被调用。
 - 核心 JAR 与受影响的 service WAR 构建通过，最终差异无凭据、生成物或无关格式化。
+
+## 阶段结果
+
+按 `status`、输入模型与代码基线、修改文件、Java 契约与行为增量、测试和构建证据、未解决项及建议下一阶段的顺序报告。`status` 只使用 `completed`、`partial`、`blocked` 或 `skipped`；后端完成不等于完整功能验收通过。

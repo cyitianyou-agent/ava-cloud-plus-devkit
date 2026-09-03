@@ -1,91 +1,77 @@
 ---
 name: delivering-ava-cloud-plus-feature
-description: Use when 需要从一项 AVA Cloud+ 业务需求出发，编排业务对象建模、代码生成、Java 后端、TypeScript 前端、数据库落地和跨层验收；不适用于只改一个已明确文件的局部任务。
+description: Use when 需要从一项 AVA Cloud+ 业务需求出发，协调业务模型、生成代码、Java 后端、TypeScript PC 前端、数据库、可选报表和最终验收；不适用于只改一个已明确文件的局部任务。
 ---
 
 # 交付 AVA Cloud+ 完整功能
 
 ## 目标
 
-把一项业务需求贯穿为可追踪的模型、代码、数据库和验收结果。本 Skill 只负责建立事实、划分阶段、维护交接契约和判断整体完成度；各阶段的具体实现继续使用插件中的专用 Skill，不在这里复制其规范。
+把业务需求转换为可追踪的交付契约，按依赖关系路由专用 Skill，并用阶段证据判断整体状态。本 Skill 不复制各阶段实现规范，也不直接拥有 XML、Java、TypeScript、数据库或 JRXML 产物。
 
-完整流程默认如下：
+完整流程是有条件分支，不是要求每个任务机械经过全部阶段：
 
 ```text
-业务需求与验收条件
-    ↓
-generating-ava-cloud-business-objects
-    ↓
-generating-ava-cloud-code
-    ↓
-ava-cloud-plus-backend-development
-    ↓
-ava-cloud-plus-frontend-development
-    ↓
-构建门禁
-    ↓
-evolving-ava-cloud-plus-database
-    ↓
-verifying-ava-cloud-plus-feature
+交付契约
+    ├── 业务功能主链
+    │   业务模型确认 → 代码候选 → Java / TypeScript PC
+    │                                  ↓
+    │                            静态与构建门禁
+    │                                  ↓
+    │                     数据库落地或按范围跳过 ──────┐
+    └── 报表旁路（报表需求才进入）
+        Crystal RPT/RptToXml → JRXML → 报表静态检查 ──┤
+                                                      ↓
+                                                 最终跨层验收
 ```
 
-只执行需求真正涉及的阶段。既有模型不变时跳过建模和生成；纯后端或纯前端需求不强行为另一端制造改动；数据库无需变化时跳过数据库阶段。
+前端涉及 REST、Repository 或服务返回契约时，先稳定对应后端契约；纯 PC 页面、绑定或本地应用行为可以在模型确认后直接进入前端阶段。
 
 ## 开始前建立交付契约
 
-读取目标项目的 `AGENTS.md` 和版本控制状态，再按 [交付契约与阶段门禁](references/delivery-contract.md) 建立本轮交付契约。至少明确：
+读取目标项目的 `AGENTS.md` 和版本控制状态，再按 [交付契约与阶段门禁](references/delivery-contract.md) 建立本轮契约。至少明确业务目标、范围、可观察验收条件、受影响层、目标模块和现有改动。
 
-- 业务目标、范围外事项和可观察验收条件；
-- 目标模块、模块简称、对象类型、对象代码及主子孙表关系；
-- 数据结构、后端、REST、前端、数据库和测试中哪些层受影响；
-- 用户已有改动、可用构建命令、数据库环境是否存在，以及哪些验证需要额外条件。
+只有缺失信息会改变业务模型、目标模块、数据库目标、报表输入或最终判定时才询问用户。交付契约中已确认的模块简称、路径和模型事实可直接交给后续 Skill，不要求后续阶段重复询问。
 
-信息可从当前会话和目标项目可靠取得时直接推进。缺失信息只有在会改变模型、目标模块、数据库目标或验收结论时才询问用户。
+## 阶段所有权
+
+| 阶段 | 唯一拥有的决策或产物 | 发现上游问题时 |
+| --- | --- | --- |
+| 业务对象 | `Domain` XML 的结构、语义、映射和真实模型增量 | 在本阶段修正并重新确认 |
+| 代码生成 | Excel/XML 转换、候选代码和最小语义合并 | 返回业务对象阶段，不自行定义模型语义 |
+| Java 后端 | Java BO、规则、Logic、Repository、REST、资源和测试 | 返回模型或生成阶段 |
+| TypeScript 前端 | `api`、`borep`、`bsapp`、`bsui/c`、注册和语言资源 | 返回后端契约、模型或生成阶段 |
+| 报表迁移 | Report IR、JRXML 和静态转换问题清单 | 返回报表输入确认或转换阶段 |
+| 数据库 | 已授权环境中的结构、元数据、SQL 和初始化数据落地 | 返回模型、制品或数据库编排阶段 |
+| 最终验收 | 验收证据、逐项结论和整体 `verdict` | 指向拥有缺陷产物的阶段，不在验收阶段顺手修复 |
 
 ## 阶段路由
 
-### 1. 业务对象建模
+1. 新对象、新模型、字段、索引、映射或关系变化，以及 Excel 转换模型的校验修正，使用 `generating-ava-cloud-business-objects`。
+2. 已确认模型需要投影为 Java 或 TypeScript 骨架时，使用 `generating-ava-cloud-code`。已有代码完整时可以跳过生成。
+3. 使用 `ava-cloud-plus-backend-development` 完成受影响的 Java 后端；使用 `ava-cloud-plus-frontend-development` 完成受影响的 TypeScript PC 前端。两者按实际契约依赖排序。
+4. 需求包含 Crystal RPT/RptToXml 迁移时，使用 `converting-crystal-reports-to-jasper` 形成独立旁路产物；它不阻塞无关业务模块开发。
+5. 汇总各实现阶段的静态检查、测试和构建结果，形成构建门禁。失败时返回产物所属阶段修复。
+6. 模型、兼容 SQL 或初始化内容变化时，使用 `evolving-ava-cloud-plus-database`。目标环境和范围未明确授权时只规划，不连接数据库。
+7. 所有可执行阶段完成后，使用 `verifying-ava-cloud-plus-feature` 对照原始契约进行一次最终验收。
 
-自然语言需求包含新对象、新模型、字段、索引或关系变化时，使用 `generating-ava-cloud-business-objects`。其最终 `Domain` XML 是后续代码与数据库阶段的模型基线。
+## 构建门禁
 
-模型未确认前不得通过修改生成代码反向掩盖模型问题。
+数据库落地前至少确认最终 XML 可解析、受影响 Java 核心工程与 service WAR 可构建、受影响 TypeScript 层可构建，并且最终差异没有未审阅覆盖、凭据和无关生成物。
 
-### 2. 代码框架生成
+构建门禁由交付 Skill 汇总模型、生成、后端和前端阶段已经产生的证据；不把最终验收 Skill 当作数据库前的重复构建步骤。
 
-模型变化需要投影到 Java 或 TypeScript 时，使用 `generating-ava-cloud-code`。候选代码先在临时目录生成，再最小合并到目标模块。记录新增、合并、跳过以及仍需手工实现的项。
+## 变更传播
 
-### 3. 后端与前端实现
+- XML 的模型、字段或映射变化，重新检查生成代码、Java、TypeScript 和数据库范围。
+- Java App/Svc 或 REST 契约变化，重新检查前端 Repository 与调用方。
+- TypeScript `api` 或 `I...View` 变化，重新检查实现、Application、PC View 和注册入口。
+- 数据库结构或初始化数据变化，重新执行后置核验和相关集成测试。
+- 报表参数、SQL、字段或布局语义变化，重新执行 Report IR 到 JRXML 的静态对照。
+- 上游假设失效时更新交付契约，并重新判断直接下游范围。
 
-先使用 `ava-cloud-plus-backend-development` 完成持久化对象、规则、仓储、REST、资源和相关测试，再使用 `ava-cloud-plus-frontend-development` 完成 `api`、`borep`、`bsapp` 与 `bsui/c`。纯前端需求或后端契约未变化时可直接进入前端阶段。
+## 完成与交接
 
-生成骨架中的集合关联、业务规则、业务逻辑、专用查询和页面交互不能仅因文件已经存在而视为完成。
+每个阶段按统一结构返回：`status`、输入基线、产出或修改文件、真实语义增量、验证证据、未解决项和建议下一阶段。`status` 只使用 `completed`、`partial`、`blocked` 或 `skipped`。
 
-### 4. 构建门禁
-
-数据库变更前，至少确认最终 XML 可解析、后端受影响工程能够编译、前端受影响层能够构建。构建失败时先回到对应开发阶段，不在数据库中试错。
-
-### 5. 数据库落地
-
-模型或初始化 SQL 发生变化时，使用 `evolving-ava-cloud-plus-database`。数据库命令会改变外部状态；只有用户明确给出或授权目标环境后才执行。没有授权或环境不可用时，保留为未执行项，不把整体结论写成已完成验收。
-
-### 6. 跨层验收
-
-使用 `verifying-ava-cloud-plus-feature` 对照最初的交付契约检查模型、Java、REST、TypeScript、数据库和行为结果。验证发现断链时，返回拥有该产物的阶段修复，然后重跑直接受影响的门禁。
-
-## 变更传播规则
-
-- XML 的模型、字段或映射变化必须重新检查生成代码、后端、前端和数据库。
-- Java App/Svc 或 REST 契约变化必须重新检查前端 Repository 与调用方。
-- TypeScript `api` 或 `I...View` 契约变化必须重新检查其实现和注册入口。
-- 数据库结构或初始化数据变化必须重新执行数据库后置核验与相关集成测试。
-- 任何阶段发现上游假设错误时，更新交付契约并重新判断后续范围，不继续沿用失效结论。
-
-## 完成标准
-
-- 每项验收条件都有对应实现位置和验证证据。
-- 所有受影响层已经处理，未受影响层没有为了流程完整而产生无关修改。
-- 数据结构、Java、REST、TypeScript、数据库映射与用户可见行为一致。
-- 构建和可执行的测试已经通过；因环境或授权未运行的项目明确列出。
-- 没有把生成成功、编译成功或数据库命令退出码单独当作业务验收成功。
-- 最终报告列出变更文件、阶段结果、验证证据、未执行项和剩余风险。
-
+最终完成要求每项验收条件都有实现位置与证据。验收条件所必需的数据库、服务、浏览器或 Jasper 运行环境缺失时判定 `partial`，不能写成完整交付通过；非必要环境缺失只列为未运行项。

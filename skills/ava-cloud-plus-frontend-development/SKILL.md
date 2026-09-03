@@ -1,6 +1,6 @@
 ---
 name: ava-cloud-plus-frontend-development
-description: 创建、修改或评审 AVA Cloud+ TypeScript 前端业务模块，联动 api、borep、bsapp 与 bsui/c 的契约、业务对象、仓库、Application 和 PC View；不适用于移动端或 Java 后端。
+description: Use when 需要创建、修改或评审 AVA Cloud+ TypeScript PC 前端业务模块，涉及 api、borep、bsapp、bsui/c、业务对象、仓库、Application 或 View；不适用于移动端或 Java 后端。
 ---
 
 # AVA Cloud+ 前端业务模块开发
@@ -21,17 +21,19 @@ bsui/c PC 端界面实现
 
 ## 开发流程位置
 
-本 Skill 在完整功能交付中消费已经确认的业务模型和服务端契约：
+本 Skill 消费已经确认的业务模型；涉及远程调用时还必须消费已经稳定的服务端契约：
 
 ```text
-业务对象建模 → 代码框架生成 → Java 后端契约
-    ↓
-ava-cloud-plus-frontend-development（当前）
-    ↓
-构建门禁 → 数据库落地 → verifying-ava-cloud-plus-feature
+已确认模型与代码候选
+    ├── Java 后端契约（远程调用变化时先稳定）
+    └── ava-cloud-plus-frontend-development（当前）
+                    ↓
+              静态与构建门禁
+                    ↓
+     数据库落地（按需）→ 最终跨层验收
 ```
 
-纯前端功能可以直接进入本阶段；跨前后端功能默认先稳定后端 App/Svc 与 REST 契约。完成后交付四层契约、注册入口、语言资源和 TypeScript 构建结果，由跨层验收继续核对数据库与实际业务行为。
+纯 PC 页面、绑定或本地应用行为可以直接进入本阶段；跨前后端功能先稳定受影响的后端 App/Svc 与 REST 契约。完成后交付四层契约、注册入口、语言资源和 TypeScript 构建结果，由交付编排汇总构建门禁，最终验收再核对数据库与实际业务行为。
 
 ## 范围与红线
 
@@ -80,7 +82,7 @@ ava-cloud-plus-frontend-development（当前）
 
 ### `bsapp`
 
-读取 [bsapp Application 与 View 契约规范](references/bsapp-layer.md)，用于 List/Edit/Choose/View Application、自定义应用、服务映射、功能入口和 Console 注册。
+先读 [bsapp 公共契约](references/bsapp-layer.md)，再按页面能力读取 [ListApp](references/bsapp-list.md)、[EditApp](references/bsapp-edit.md) 或 [ChooseApp、ViewApp 与服务映射](references/bsapp-services.md)。自定义应用只读取直接相关的公共约束和服务映射。
 
 ### `bsui/c`
 
@@ -92,7 +94,7 @@ ava-cloud-plus-frontend-development（当前）
 - [ChooseView 规范与完整骨架](references/choose-view.md)
 - [ViewView 规范与完整骨架](references/view-view.md)
 
-涉及 View 数据绑定时读 [JSONModel 数据绑定与模型边界](references/json-model-bindings.md)，涉及控件时读 [常用控件与代码示例](references/controls-and-bindings.md)。字段同时支持输入搜索和弹窗选择时读 [可搜索选择输入框](references/searchable-inputs.md)。只有非标准页面、查询面板或行业覆盖才读 [非标准页面与行业扩展](references/custom-and-extensions.md)。
+涉及常规 View 数据绑定时读 [JSONModel 基础绑定](references/json-model-bindings.md)；只有 Dialog、Popover、命名模型、组合模型或特殊刷新时再读 [JSONModel 高级模式](references/json-model-advanced.md)。基础字段先读 [基础控件与数据类型](references/controls-and-bindings.md)；外部 BO 或值帮助再读 [Repository 与选择控件](references/repository-controls.md)；ViewView、状态、所有人、组织或服务按钮再读 [只读、状态与服务控件](references/display-and-state-controls.md)。字段同时支持输入搜索和弹窗选择时读 [可搜索选择输入框](references/searchable-inputs.md)。只有非标准页面、查询面板或行业覆盖才读 [非标准页面与行业扩展](references/custom-and-extensions.md)。
 
 ## 决定需要改哪些层
 
@@ -141,3 +143,7 @@ ava-cloud-plus-frontend-development（当前）
 - PC View 符合页面类型、控件和 JSONModel 规范；未触碰移动端。
 - 国际化键、BO 属性名、Repository 方法名和业务对象编码在各层拼写一致。
 - 目标模块 TypeScript 构建通过；没有修改 `3rdparty` 或生成产物来规避错误。
+
+## 阶段结果
+
+按 `status`、输入模型与后端契约、修改文件、TypeScript 契约与交互增量、构建证据、未解决项及建议下一阶段的顺序报告。`status` 只使用 `completed`、`partial`、`blocked` 或 `skipped`；前端完成不等于完整功能验收通过。

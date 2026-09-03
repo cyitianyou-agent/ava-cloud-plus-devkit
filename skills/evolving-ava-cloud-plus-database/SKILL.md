@@ -66,3 +66,6 @@ description: Use when 需要使用 btulz.transforms 的 ds、dsJar、sql 或 bob
 - 初始化 SQL 和初始业务数据只在需求涉及时执行，并验证其业务结果。
 - 结果报告不包含密码、连接串或客户数据；未获授权或无法连接时明确标记为“未执行”。
 
+## 阶段结果
+
+按 `status`、输入 XML/JAR/SQL、非敏感目标环境标识、实际动作、结构与数据核验证据、未解决项及建议进入最终验收或返回上游的原因报告。`status` 只使用 `completed`、`partial`、`blocked` 或 `skipped`；未获授权时使用 `partial`，不得把命令规划写成数据库已落地。

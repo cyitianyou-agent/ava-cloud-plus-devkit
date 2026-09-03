@@ -1,4 +1,4 @@
 interface:
   display_name: "生成 AVA Cloud+ 业务对象"
-  short_description: "根据业务描述创建或局部更新 AVA Cloud+ 数据结构 XML"
-  default_prompt: "使用 $generating-ava-cloud-business-objects 根据我的描述创建或更新 AVA Cloud+ 业务对象数据结构 XML。"
+  short_description: "创建、更新或校验 AVA Cloud+ 数据结构 XML"
+  default_prompt: "使用 $generating-ava-cloud-business-objects 根据业务描述创建、更新或校验 AVA Cloud+ 业务对象数据结构 XML。"

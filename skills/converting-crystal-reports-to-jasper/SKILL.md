@@ -9,7 +9,7 @@ description: Use when converting Crystal Reports RPT or RptToXml metadata into p
 
 ## 开发流程位置
 
-本 Skill 是报表迁移的独立分支，不属于“业务对象建模 → 代码生成 → 前后端开发 → 数据库 → 验收”的标准功能链。只有完整功能明确包含 Crystal 报表迁移时，才由 `delivering-ava-cloud-plus-feature` 把它作为并行交付项纳入最终验收。
+本 Skill 是完整交付中的可选旁路，不属于业务对象、代码生成、前后端和数据库主链。交付契约包含 Crystal 报表迁移时，由 `delivering-ava-cloud-plus-feature` 路由本 Skill，并把静态转换证据交给 `verifying-ava-cloud-plus-feature`；它不阻塞无关业务模块阶段。
 
 ## 选择输入
 
@@ -38,3 +38,7 @@ description: Use when converting Crystal Reports RPT or RptToXml metadata into p
 ## 输出
 
 JRXML 文件必须是 UTF-8 纯 XML，不加 Markdown 围栏或说明文字。单文件只生成一个 `.jrxml`，问题在回复中列出；批量生成成功的 `.jrxml` 和唯一 `conversion-report.json`。默认不覆盖已有文件。完整契约见 [`references/output-contract.md`](references/output-contract.md)。规范来源说明见 [`references/source-provenance.md`](references/source-provenance.md)。
+
+阶段报告按 `status`、脱敏输入标识、JRXML 或批量报告路径、转换语义、静态复查证据、未验证项和建议进入最终验收或返回输入确认的原因组织。`status` 只使用 `completed`、`partial`、`blocked` 或 `skipped`。
+
+交付契约只要求静态转换时，JRXML 与 Report IR 对照完成即可将本阶段标记为 `completed`，同时如实列出未执行的编译、数据和版式验证。交付契约把其中任一运行验证列为必要条件而环境不可用时，本阶段为 `partial`。任何情况下都不能把“JRXML 已生成”单独写成静态或运行验收通过。

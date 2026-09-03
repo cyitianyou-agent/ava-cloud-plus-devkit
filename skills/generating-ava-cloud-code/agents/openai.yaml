@@ -1,4 +1,4 @@
 interface:
   display_name: "生成 AVA Cloud+ 代码框架"
-  short_description: "从业务对象 Excel 或 XML 生成前后端代码并安全合并"
-  default_prompt: "使用 $generating-ava-cloud-code 从业务对象 Excel 或 XML 生成 AVA Cloud+ 前后端代码框架，并安全合并到目标模块。"
+  short_description: "从已确认模型生成 Java 与 TypeScript PC 候选代码"
+  default_prompt: "使用 $generating-ava-cloud-code 从已确认的业务对象 Excel 或 XML 生成 AVA Cloud+ Java 与 TypeScript PC 代码框架，并安全合并到目标模块。"
