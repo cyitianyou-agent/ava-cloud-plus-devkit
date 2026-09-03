@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-03
+
 ### Added
 
 - `delivering-ava-cloud-plus-feature` Skill，建立交付契约并按业务建模、代码生成、后端、前端、数据库和验收阶段编排完整功能。
@@ -34,5 +36,6 @@
 - 安装、更新、贡献、安全与发布文档。
 - 本地校验、语义化版本更新和 GitHub Actions 工作流。
 
-[Unreleased]: https://github.com/cyitianyou-agent/ava-cloud-plus-devkit/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/cyitianyou-agent/ava-cloud-plus-devkit/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/cyitianyou-agent/ava-cloud-plus-devkit/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/cyitianyou-agent/ava-cloud-plus-devkit/releases/tag/v0.1.0

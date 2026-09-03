@@ -22,7 +22,7 @@
 
 ## 发布前检查
 
-- 三个 Skill 均有合法 frontmatter，且目录内引用文件完整。
+- 八个 Skill 均有合法 frontmatter，且目录内引用文件完整。
 - 没有本机绝对路径、凭据、连接串或临时输出进入仓库。
 - `VERSION`、manifest、Git 标签三者一致。
 - README 中的安装命令与实际 GitHub owner、仓库名一致。
