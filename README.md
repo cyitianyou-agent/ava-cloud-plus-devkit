@@ -7,10 +7,11 @@
 | Skill | 用途 |
 | --- | --- |
 | `ava-cloud-plus-frontend-development` | 创建、修改或评审 AVA Cloud+ TypeScript 前端业务模块，联动 `api`、`borep`、`bsapp` 与 `bsui/c` |
+| `ava-cloud-plus-backend-development` | 创建、修改或评审 AVA Cloud+ Java 后端业务模块，联动 BO、规则、逻辑、仓储、REST 与初始化资源 |
 | `generating-ava-cloud-business-objects` | 根据自然语言创建或局部更新 AVA Cloud+ `datastructures` XML |
 | `converting-crystal-reports-to-jasper` | 将 Crystal Reports RPT/RptToXml 元数据迁移为 JasperReports Library 7.x JRXML |
 
-三个 Skill 的引用文档、模板和代理界面配置均随插件发布，不依赖作者电脑上的原始目录。
+四个 Skill 的引用文档、模板和代理界面配置均随插件发布，不依赖作者电脑上的原始目录。
 
 ## 安装
 
@@ -46,6 +47,7 @@ codex plugin add ava-cloud-plus-devkit@ava-cloud-plus-devkit
 ## 使用示例
 
 - “帮我在 AVA Cloud+ 的库存模块里新增一个 PC 端编辑功能。”
+- “帮我在 AVA Cloud+ 的销售模块新增一个 Java 后端业务逻辑，并补齐仓储、REST 和测试。”
 - “模块简称是 `MM`，请根据描述生成一个主数据业务对象 XML，输出到指定目录。”
 - “把这份 RptToXml XML 转为 JasperReports 7.x JRXML。”
 
@@ -61,7 +63,7 @@ codex plugin add ava-cloud-plus-devkit@ava-cloud-plus-devkit
 ava-cloud-plus-devkit/
 ├── .agents/plugins/marketplace.json  # Git marketplace 清单
 ├── .codex-plugin/plugin.json         # Codex 插件 manifest
-├── skills/                           # 三个可独立触发的 Skill
+├── skills/                           # 四个可独立触发的 Skill
 ├── scripts/                          # 本地校验与版本更新脚本
 ├── docs/                             # 安装、发布与维护文档
 ├── VERSION                           # 唯一发布版本号

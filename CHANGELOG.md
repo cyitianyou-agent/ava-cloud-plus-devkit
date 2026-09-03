@@ -6,7 +6,7 @@
 
 ### Added
 
-- 预留后续变更。
+- `ava-cloud-plus-backend-development` Skill，覆盖 AVA Cloud+ Java 后端业务对象、规则、跨对象逻辑、仓储、REST、初始化资源和测试。
 
 ## [0.1.0] - 2026-09-02
 

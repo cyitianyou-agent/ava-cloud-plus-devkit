@@ -1,0 +1,4 @@
+interface:
+  display_name: "AVA Cloud+ 后端开发"
+  short_description: "创建、修改和评审 AVA Cloud+ Java 后端业务模块"
+  default_prompt: "使用 $ava-cloud-plus-backend-development 开发或评审一个 AVA Cloud+ Java 后端业务功能。"
