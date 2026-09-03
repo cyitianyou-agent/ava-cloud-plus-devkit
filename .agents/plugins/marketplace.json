@@ -1,0 +1,20 @@
+{
+  "name": "ava-cloud-plus-devkit",
+  "interface": {
+    "displayName": "Ava Cloud Plus Devkit"
+  },
+  "plugins": [
+    {
+      "name": "ava-cloud-plus-devkit",
+      "source": {
+        "source": "url",
+        "url": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "ava-cloud-plus-devkit",
+  "version": "0.1.0",
+  "description": "Codex skills for AVA Cloud+ frontend development, business-object XML generation, and Crystal Reports to JasperReports conversion.",
+  "author": {
+    "name": "cyitianyou-agent",
+    "email": "cyitianyou@gmail.com",
+    "url": "https://github.com/cyitianyou-agent"
+  },
+  "homepage": "https://github.com/cyitianyou-agent/ava-cloud-plus-devkit",
+  "repository": "https://github.com/cyitianyou-agent/ava-cloud-plus-devkit",
+  "license": "MIT",
+  "keywords": [
+    "ava-cloud-plus",
+    "codex",
+    "skills",
+    "business-object",
+    "jasperreports"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AVA Cloud+ Devkit",
+    "shortDescription": "AVA Cloud+ 开发、业务对象建模与报表迁移技能集",
+    "longDescription": "为 Codex 提供 AVA Cloud+ TypeScript 前端业务模块开发、业务对象数据结构 XML 生成，以及 Crystal Reports 到 JasperReports 7.x 的迁移能力。",
+    "developerName": "cyitianyou-agent",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "帮我开发或评审一个 AVA Cloud+ 前端业务模块。",
+      "根据业务描述生成 AVA Cloud+ 业务对象 XML。",
+      "把 Crystal Reports 元数据转换为 JasperReports 7.x JRXML。"
+    ],
+    "websiteURL": "https://github.com/cyitianyou-agent/ava-cloud-plus-devkit"
+  }
+}

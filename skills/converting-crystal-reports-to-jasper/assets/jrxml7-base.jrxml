@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport name="Report" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f4b0db45-07de-41ad-960b-a90d0ad8b291">
+  <style name="Base" default="true" fontName="SansSerif" fontSize="10.0"/>
+  <detail>
+    <band height="1"/>
+  </detail>
+</jasperReport>

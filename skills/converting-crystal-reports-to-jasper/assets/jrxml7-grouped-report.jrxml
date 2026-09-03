@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport name="GroupedSalesOrder" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72dcac52-9528-47ae-9353-1efc0a7d8ca0">
+  <style name="Base" default="true" fontName="SansSerif" fontSize="10.0"/>
+  <style name="Header" style="Base" bold="true"/>
+  <parameter name="Order_No" class="java.lang.String"/>
+  <query language="sql"><![CDATA[SELECT OrderNo, LineNo, ItemName, Amount FROM SalesOrderLine WHERE OrderNo = $P{Order_No}]]></query>
+  <field name="OrderNo" class="java.lang.String"/>
+  <field name="LineNo" class="java.lang.Integer"/>
+  <field name="ItemName" class="java.lang.String"/>
+  <field name="Amount" class="java.math.BigDecimal"/>
+  <variable name="OrderAmount" resetType="Group" calculation="Sum" resetGroup="OrderGroup" class="java.math.BigDecimal">
+    <expression><![CDATA[$F{Amount}]]></expression>
+  </variable>
+  <group name="OrderGroup" reprintHeaderOnEachPage="true">
+    <expression><![CDATA[$F{OrderNo}]]></expression>
+    <groupHeader>
+      <band height="20">
+        <element kind="textField" uuid="ee10f3ea-485c-4e35-829e-929264988f08" x="0" y="0" width="555" height="20" style="Header">
+          <expression><![CDATA["Order: " + $F{OrderNo}]]></expression>
+        </element>
+      </band>
+    </groupHeader>
+    <groupFooter>
+      <band height="20">
+        <element kind="textField" uuid="9f1b2900-4f20-4553-9d45-b31c8ee818d3" x="355" y="0" width="200" height="20" pattern="#0.00" hTextAlign="Right" style="Header">
+          <expression><![CDATA[$V{OrderAmount}]]></expression>
+        </element>
+      </band>
+    </groupFooter>
+  </group>
+  <detail>
+    <band height="20">
+      <element kind="textField" uuid="7a2f7e1b-39d5-43da-835b-98d9580c517f" x="0" y="0" width="60" height="20">
+        <expression><![CDATA[$F{LineNo}]]></expression>
+      </element>
+      <element kind="textField" uuid="056cb284-2b88-4924-94fc-6ff2c1d56f2b" x="60" y="0" width="295" height="20" textAdjust="StretchHeight" positionType="Float">
+        <expression><![CDATA[$F{ItemName}]]></expression>
+      </element>
+      <element kind="textField" uuid="0500d9bc-0a5f-4128-b404-9b21eaf26729" x="355" y="0" width="200" height="20" pattern="#0.00" hTextAlign="Right">
+        <expression><![CDATA[$F{Amount}]]></expression>
+      </element>
+    </band>
+  </detail>
+</jasperReport>

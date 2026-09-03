@@ -1,0 +1,7 @@
+interface:
+  display_name: "Crystal 转 Jasper 7.x"
+  short_description: "将 Crystal Reports 转为可移植的 JasperReports 7.x JRXML"
+  default_prompt: "使用 $converting-crystal-reports-to-jasper 将给定 Crystal RPT 或 RptToXml 元数据转换为 JasperReports 7.x JRXML。"
+
+policy:
+  allow_implicit_invocation: true

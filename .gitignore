@@ -1,0 +1,34 @@
+# Operating-system and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python validation caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local environment and secret files
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs, temporary files, and generated report binaries
+*.log
+*.tmp
+*.bak
+*.jasper
+coverage/
+dist/
+build/
+
+# Local reference clones and Codex caches
+.tmp-*/
+.codex-cache/

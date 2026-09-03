@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport name="SalesOrder" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b97091af-d630-4df2-a25d-39431cb7c5b0">
+  <style name="Base" default="true" fontName="SansSerif" fontSize="10.0"/>
+  <style name="Header" style="Base" bold="true"/>
+  <parameter name="Order_No" class="java.lang.String"/>
+  <query language="sql"><![CDATA[SELECT OrderNo, CustomerName FROM SalesOrder WHERE OrderNo = $P{Order_No}]]></query>
+  <field name="OrderNo" class="java.lang.String"/>
+  <field name="CustomerName" class="java.lang.String"/>
+  <title height="30">
+    <element kind="staticText" uuid="1113678f-9385-4859-91fb-e4a81672ba4e" x="0" y="0" width="555" height="24" fontSize="16.0" hTextAlign="Center" style="Header">
+      <text><![CDATA[Sales Order]]></text>
+    </element>
+  </title>
+  <columnHeader height="20">
+    <element kind="staticText" uuid="8643660d-8182-4e17-b5e8-41c0021fc189" x="0" y="0" width="160" height="20" style="Header">
+      <text><![CDATA[Order No.]]></text>
+    </element>
+    <element kind="staticText" uuid="c4a67cec-34e4-4fd0-92cb-f67ff222d300" x="160" y="0" width="395" height="20" style="Header">
+      <text><![CDATA[Customer]]></text>
+    </element>
+  </columnHeader>
+  <detail>
+    <band height="20">
+      <element kind="textField" uuid="70b881b1-9918-44a9-90b3-5148932805ee" x="0" y="0" width="160" height="20">
+        <expression><![CDATA[$F{OrderNo}]]></expression>
+      </element>
+      <element kind="textField" uuid="8161bd18-7974-47c9-a5c4-21f4aa4715ee" x="160" y="0" width="395" height="20" textAdjust="StretchHeight" positionType="Float">
+        <expression><![CDATA[$F{CustomerName}]]></expression>
+      </element>
+    </band>
+  </detail>
+</jasperReport>
